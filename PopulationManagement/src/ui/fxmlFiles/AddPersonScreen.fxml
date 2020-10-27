@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #d6f8ff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox layoutX="100.0" layoutY="101.0" prefHeight="200.0" prefWidth="400.0" spacing="10.0">
+         <children>
+            <HBox alignment="TOP_RIGHT" prefHeight="23.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label text="First Name:">
+                     <font>
+                        <Font name="Lucida Sans Unicode" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldFirstName" prefHeight="25.0" prefWidth="220.0" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" prefHeight="23.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label text="Last Name:">
+                     <font>
+                        <Font name="Lucida Sans Unicode" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldLastName" prefHeight="25.0" prefWidth="220.0" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" prefHeight="23.0" prefWidth="200.0" spacing="45.0">
+               <children>
+                  <Label text="Gender:">
+                     <font>
+                        <Font name="Lucida Sans Unicode" size="16.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="radioButtonMale" mnemonicParsing="false" selected="true" text="Male">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="toogleGroupGender" />
+                     </toggleGroup>
+                     <font>
+                        <Font name="Lucida Sans Unicode" size="16.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="radioButtonFemale" mnemonicParsing="false" text="Female" toggleGroup="$toogleGroupGender">
+                     <font>
+                        <Font name="Lucida Sans Unicode" size="16.0" />
+                     </font>
+                  </RadioButton>
+               </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" prefHeight="23.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label text="Birthdate:">
+                     <font>
+                        <Font name="Lucida Sans Unicode" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldBirthdate" prefWidth="220.0" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" prefHeight="23.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label text="Height:">
+                     <font>
+                        <Font name="Lucida Sans Unicode" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldHeight" prefWidth="220.0" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_RIGHT" prefHeight="23.0" prefWidth="200.0" spacing="20.0">
+               <children>
+                  <Label text="Nationality:">
+                     <font>
+                        <Font name="Lucida Sans Unicode" size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldNationality" prefWidth="220.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="23.0" prefWidth="200.0" spacing="6.0" />
+         </children>
+      </VBox>
+      <Button layoutX="273.0" layoutY="337.0" mnemonicParsing="false" onAction="#addPerson" text="Save">
+         <font>
+            <Font name="Lucida Sans Unicode" size="16.0" />
+         </font>
+      </Button>
+      <HBox layoutX="208.0" layoutY="14.0" spacing="5.0">
+         <children>
+            <Label text="Add Person">
+               <font>
+                  <Font name="Lucida Sans Unicode" size="25.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/equipo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
