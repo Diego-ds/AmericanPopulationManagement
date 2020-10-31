@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #d6f8ff;" BorderPane.alignment="CENTER">
@@ -96,6 +95,18 @@
                   <ImageView fitHeight="34.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/guardar-el-archivo.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="231.0" layoutY="327.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="127.0" text="Delete">
+               <font>
+                  <Font name="Lucida Sans Unicode" size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="34.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/compartimiento.png" />
                      </image>
                   </ImageView>
                </graphic>
