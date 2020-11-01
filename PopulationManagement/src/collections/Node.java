@@ -14,7 +14,8 @@ public class Node<K extends Comparable<K>,V> {
 		this.key=key;
 		left = null;
 		right = null;
-		this.height=1;
+		father=null;
+		this.height=0;
 	}
 
 	public K getKey() {

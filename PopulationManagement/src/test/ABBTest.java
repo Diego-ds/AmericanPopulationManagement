@@ -79,6 +79,7 @@ public class ABBTest {
 		Assertions.assertFalse(bst.deleteValue(13));
 	}
 	
+	/*
 	@Test
 	public void heightTest() {
 		setup2();
@@ -91,7 +92,32 @@ public class ABBTest {
 		Assertions.assertTrue(bst.height(node) == 2);
 		
 		node = bst.searchValue(-25);
-		System.out.println(bst.height(node));
 		Assertions.assertTrue(bst.height(node) == 1);
+	}
+	*/
+	
+	@Test
+	public void heightTest2() {
+		setup3();
+		bst.insert(5, 5);
+		Node<Integer,Integer> node = bst.getRoot();
+		Assertions.assertTrue(node.getHeight()==0);
+		bst.insert(10,10 );
+		Assertions.assertTrue(node.getHeight()==1);
+		bst.insert(15,15);
+		Assertions.assertTrue(node.getHeight()==2);
+		Node<Integer,Integer> right = node.getRight();
+		Assertions.assertTrue(right.getHeight()==1);
+		Node<Integer,Integer> leaf = right.getRight();
+		Assertions.assertTrue(leaf.getHeight()==0);
+		bst.insert(9,9);
+		bst.insert(-3, -3);
+		bst.insert(-5, -5);
+		System.out.println(node.getHeight());
+		System.out.println(node.getLeft().getHeight());
+		System.out.println(node.getLeft().getLeft().getHeight());
+		bst.insert(-10, -10);
+		bst.insert(-15, -15);
+		System.out.println(node.getHeight());
 	}
 }

@@ -8,37 +8,36 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements IBinarySearc
 	
 	@Override
 	public void insert(K key,V value) {
+		Node<K,V> toAdd = new Node<K,V>(key,value);
 		if (root == null) {
-			root = new Node<K,V>(key, value);
+			root = new Node<K,V>(key,value);
 		}else {
-			insert(key,value,root);
+			insert(toAdd,root);
+			updateHeight(toAdd);
 		}	
 	}
 	
-	private void insert(K key,V value, Node<K,V> actual) {
-		actual.setHeight(Math.max(height(actual.getLeft()),height(actual.getRight())) + 1 );
-			if (key.compareTo(actual.getKey()) <= 0) {
+	private void insert(Node<K,V> toAdd, Node<K,V> actual) {
+			if (toAdd.getKey().compareTo(actual.getKey()) < 0) {
 				if (actual.getLeft() == null) {
-					actual.setLeft(new Node<K,V>(key, value));
-					actual.getLeft().setFather(actual);
+					actual.setLeft(toAdd);
+					toAdd.setFather(actual);
 				}
 				else {
-					insert (key, value, actual.getLeft());
+					insert (toAdd, actual.getLeft());
 				}
 			}
 			//Right
 			else {
 				if (actual.getRight() == null) {
-					actual.setRight(new Node<K,V>(key, value));
-					actual.getRight().setFather(actual);
+					actual.setRight(toAdd);
+					toAdd.setFather(actual);
 				}
 				else {
-					insert (key, value, actual.getRight());
+					insert (toAdd, actual.getRight());
 				}					
 			}
-			
-			
-			
+
 		}
 	
 	@Override
@@ -115,6 +114,8 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements IBinarySearc
 			else {
 				father.setRight(null);
 			}
+			
+			updateHeight(father);
 		}
 		else {
 			root = null;
@@ -139,6 +140,8 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements IBinarySearc
 			else {
 				father.setRight(child);
 			}
+			
+			updateHeight(father);
 		}
 		else {
 			root = child;
@@ -182,6 +185,8 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements IBinarySearc
 			if (goner == root) {
 				root = minor;
 			}
+			
+			updateHeight(minor);
 	}
 	
 	private Node<K,V> searchMinor(Node<K,V> father) {
@@ -209,7 +214,7 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements IBinarySearc
         return toString += actual.getKey() + " ";  
 	}
 	
-	@Override
+	
 	public int height(Node<K,V> currentNode) {
 		
 		if(currentNode == null) {
@@ -232,5 +237,24 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements IBinarySearc
 	
 	public void setRoot(Node<K,V> root) {
 		this.root = root;
+	}
+	
+	public void updateHeight(Node <K,V> node) {
+		if(node!=null) {
+			int right =-1;
+			int left =-1;
+			
+			if(node.getLeft()!=null) {
+				left = node.getLeft().getHeight();
+			}
+			if(node.getRight()!=null) {
+				right = node.getRight().getHeight();
+			}
+			
+			int height = Math.max(left, right) + 1;
+			node.setHeight(height);
+			updateHeight(node.getFather());
+			
+		}
 	}
 }
