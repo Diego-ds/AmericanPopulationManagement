@@ -1,7 +1,8 @@
 package collections;
 
 public class Node<K extends Comparable<K>,V> {
-
+	
+	private int height;
 	private K key;
 	private V value;
 	private Node<K,V> left;
@@ -13,6 +14,7 @@ public class Node<K extends Comparable<K>,V> {
 		this.key=key;
 		left = null;
 		right = null;
+		this.height=1;
 	}
 
 	public K getKey() {
@@ -45,6 +47,13 @@ public class Node<K extends Comparable<K>,V> {
 
 	public void setFather(Node<K,V> father) {
 		this.father = father;
+	}
+	
+	public void setHeight(int height) {
+		this.height=height;
+	}
+	public int getHeight() {
+		return this.height;
 	}
 }
 

@@ -16,6 +16,7 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements IBinarySearc
 	}
 	
 	private void insert(K key,V value, Node<K,V> actual) {
+		actual.setHeight(Math.max(height(actual.getLeft()),height(actual.getRight())) + 1 );
 			if (key.compareTo(actual.getKey()) <= 0) {
 				if (actual.getLeft() == null) {
 					actual.setLeft(new Node<K,V>(key, value));
@@ -35,6 +36,9 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements IBinarySearc
 					insert (key, value, actual.getRight());
 				}					
 			}
+			
+			
+			
 		}
 	
 	@Override
