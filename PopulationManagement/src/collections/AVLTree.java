@@ -6,12 +6,15 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>{
 		super();
 	}
 	
+	@Override
+	public boolean deleteValue(K key) {
+		return false;
+	}
 	
+	@Override
 	public void insert(K key,V value) {
 		super.insert(key,value);
 		Node<K,V> n =searchValue(key);
-		//System.out.println("height "+n.getHeight());
-		//System.out.println("key "+n.getKey());
 		balance(n);
 	}
 	
@@ -47,17 +50,14 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>{
 			}
 			balance(node.getFather());
 		}
-		
 	}
 	
 	public void rightCases(Node<K,V> node) {
 		int balanceFactor = balanceFactor(node.getRight());
 		
 		if(balanceFactor==0 || balanceFactor==1) {
-			
 			leftRotate(node);	
 			updateHeight(node);
-
 		}else{
 			rightRotate(node.getRight());
 			leftRotate(node);
