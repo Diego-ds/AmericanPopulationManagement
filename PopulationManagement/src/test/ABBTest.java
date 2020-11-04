@@ -78,24 +78,24 @@ public class ABBTest {
 		
 		Assertions.assertFalse(bst.deleteValue(13));
 	}
+
 	
-	/*
 	@Test
 	public void heightTest() {
 		setup2();
 		
-		Assertions.assertTrue(bst.height(bst.getRoot()) == 4);
+		Assertions.assertTrue(bst.getRoot().getHeight() == 3);
 		
-		Assertions.assertFalse(bst.height(bst.getRoot()) == 2);
+		Assertions.assertFalse(bst.getRoot().getHeight() == 1);
 		
 		Node<Integer, Integer> node = bst.searchValue(100);
-		Assertions.assertTrue(bst.height(node) == 2);
+		Assertions.assertTrue(node.getHeight() == 1);
 		
 		node = bst.searchValue(-25);
-		Assertions.assertTrue(bst.height(node) == 1);
+		Assertions.assertTrue(node.getHeight() == 0);
 	}
-	*/
 	
+	/*
 	@Test
 	public void heightTest2() {
 		setup3();
@@ -120,4 +120,5 @@ public class ABBTest {
 		bst.insert(-15, -15);
 		System.out.println(node.getHeight());
 	}
+	*/
 }

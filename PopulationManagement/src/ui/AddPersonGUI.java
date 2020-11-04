@@ -19,7 +19,7 @@ public class AddPersonGUI {
     public AddPersonGUI(Manager manager, WelcomeGUI welcome,MainMenuGUI mainMenu) {
     	this.mainMenu=mainMenu;
 		this.manager = manager;
-		this.mainMenu = mainMenu;
+		this.welcome=welcome;
 	}
 
 	@FXML
@@ -48,8 +48,7 @@ public class AddPersonGUI {
 
     @FXML
     public void addPerson(ActionEvent event) throws IOException {
-    	
-    	
+
       	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlFiles/MainMenuScreen.fxml"));
     	fxmlLoader.setController(mainMenu);
     	
