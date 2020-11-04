@@ -32,7 +32,6 @@ class ManagerTest {
 		System.out.println(record.getHeight());
 		System.out.println(record.getNacionality());
 		System.out.println(record.getBirthDate());
-		System.out.println(record.getAge());
 	}
 
 }

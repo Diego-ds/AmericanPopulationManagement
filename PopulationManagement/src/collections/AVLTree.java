@@ -1,5 +1,6 @@
 package collections;
 
+
 public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>{
 	
 	public AVLTree() {
@@ -122,6 +123,8 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>{
 		}
 	}
 	
-
-	
+	public Node<K,V> getRoot(){
+		return super.getRoot();
+		
+	}
 }

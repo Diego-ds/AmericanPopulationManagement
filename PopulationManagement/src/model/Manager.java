@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import collections.AVLTree;
+import collections.Node;
 
 public class Manager {
 	
@@ -21,11 +22,13 @@ public class Manager {
 	public static final String allowedPath = "data/allowedCountries.txt";
 	
 	private AVLTree<String, Record> tree;
+	
 	private ArrayList<String> names;
 	private ArrayList<String> lastNames;
 	private ArrayList<String> ages;
 	private ArrayList<String> population;
 	private Record[] generatedRecords;
+	
 	
 	public Manager() {
 		tree = new AVLTree<String,Record>();
@@ -87,6 +90,7 @@ public class Manager {
 		populationReader.close();
 		allowedReader.close();
 		
+		//All data bases need at least one line
 		if (names.size() != 0 && lastNames.size() != 0 && ages.size() != 0 && 
 				population.size() != 0) {
 			return true;
@@ -132,41 +136,44 @@ public class Manager {
 			gender = Record.MALE;
 		}
 
-		//Age (Needed for birth date calculation)
+		//Age (Needed for birth date calculation and height calculation)
 		int per = r.nextInt(101);
 		String percentage = Integer.toString(per) + "%"; //Necessary for a good comparison
-		String age = "0";
+		int age = 0;
 
 		exit = false;
 		for (int i = 0; i < ages.size() && !exit; i++) {
 			if (percentage.compareTo(ages.get(i).split(",")[2]) < 0) {
+				
 				int minNumber = Integer.parseInt(ages.get(i).split(",")[0]);
 				int maxNumber = Integer.parseInt(ages.get(i).split(",")[1]);
-
-
-				age = Integer.toString(minNumber + r.nextInt(maxNumber + 1));
+				int difference = maxNumber - minNumber;
+				age = minNumber + r.nextInt(difference);
 				exit = true;
 			}
 		}
+		System.out.println("AGE: " + age);
 
 		//Height
-		double baseAge = 1; 
-		if (Integer.parseInt(age) < 9) {
+		double baseAge = 1.00; 
+		if (age < 9) {
 			baseAge = 0;
 		}
-		else if (Integer.parseInt(age) < 14) {
+		else if (age < 14) {
 			baseAge = 0.50;
 		}
 
 		double prevHeight = baseAge + r.nextDouble();
-		DecimalFormat df = new DecimalFormat("#,##");
-		df.setRoundingMode(RoundingMode.DOWN);
-		double height = Double.parseDouble(df.format(prevHeight));
+		String heightProcess = Double.toString(prevHeight);
+		if (heightProcess.length() > 4) {
+			heightProcess = Double.toString(prevHeight).substring(0,4);
+		}
+		double height = Double.parseDouble(heightProcess);
 
 		//BirthDate
 		LocalDate baseDate = LocalDate.now();
-		baseDate.minusYears(Integer.parseInt(age));
-		baseDate.minusDays(r.nextInt(342));
+		baseDate = baseDate.minusYears(age);
+		baseDate = baseDate.minusDays(r.nextInt(342));
 		String birthDate = baseDate.toString();
 
 		//Nationality
@@ -176,33 +183,28 @@ public class Manager {
 		double maxPer = Double.parseDouble(maxPerString.substring(0, maxPerString.length() - 1));
 
 		double chosenPer = maxPer * r.nextDouble();
-		chosenPer = Double.parseDouble(df.format(chosenPer));
 		
-		String nationPer = Double.toString(chosenPer) + "%";
+		String nationPer = Double.toString(chosenPer);
+		if (nationPer.length() > 4) {
+			nationPer = Double.toString(chosenPer).substring(0,4) + "%";
+		}
 		String perCondition = "";
 		
 		exit = false;
 		for (int i = population.size() - 1; i >= 0 && !exit; i--) {
-			System.out.println(population.get(i).split(",")[0]);
-			System.out.println(population.get(i).split(",")[10]);
 			if (nationPer.compareTo(population.get(i).split(",")[10]) <= 0) {
 				perCondition = population.get(i).split(",")[10];
 				exit = true;
 			}
 		}
-		
-		System.out.println("NUMERO ALEATORIO: " + nationPer);
-		System.out.println("PERCONDITION: " + perCondition);
+
 		
 		ArrayList<String> candidateCountries = new ArrayList<>();
 		for (int i = 0; i < population.size(); i++) {
-			System.out.println(population.get(i).split(",")[10]);
 			if (perCondition.compareTo(population.get(i).split(",")[10]) == 0) {
 				candidateCountries.add(population.get(i).split(",")[0]);
 			}
 		}
-		
-		System.out.println("TAMAÑO FINAL: " + candidateCountries.size());
 		
 		String nationality;
 		if (candidateCountries.size() == 1) {
@@ -223,5 +225,27 @@ public class Manager {
 
 	public void setRecords(Record[] records) {
 		generatedRecords = records;
+	}
+
+	public ArrayList<String> searchByName(String name) {
+		ArrayList<String> names= new ArrayList<String>();
+		Node<String,Record> node = tree.getRoot();
+		if(node!=null) {
+			return searchByName(names,node,name);
+		}
+		return null;
+	}
+	
+	private ArrayList<String> searchByName(ArrayList<String> names,Node<String,Record> current,String name) {
+		String toCompare = current.getValue().getName().substring(0,name.length());
+		if(current.getValue().getName().contains(name)) {
+			if(toCompare.contains(name)) {
+				names.add(current.getValue().getName());
+			}
+		}
+		
+		searchByName();
+		return names;
+		
 	}
 }
