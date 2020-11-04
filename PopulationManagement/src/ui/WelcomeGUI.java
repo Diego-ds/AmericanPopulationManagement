@@ -33,7 +33,6 @@ public class WelcomeGUI {
     	fxmlLoader.setController(mainMenu);
     	
     	Parent searchPane = fxmlLoader.load();
-    	mainPane.getChildren().clear();
     	mainPane.setCenter(searchPane);
     }
     

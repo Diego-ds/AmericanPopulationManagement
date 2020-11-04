@@ -36,7 +36,6 @@ public class MainMenuGUI {
     	
     	Parent mainMenuPane = fxmlLoader.load();
     		
-    	mainMenu.getMainPane().getChildren().clear();
     	mainMenu.getMainPane().setCenter(mainMenuPane);
     }
 
@@ -47,7 +46,6 @@ public class MainMenuGUI {
     	
     	Parent mainMenuPane = fxmlLoader.load();
     		
-    	mainMenu.getMainPane().getChildren().clear();
     	mainMenu.getMainPane().setCenter(mainMenuPane);
     }
 
@@ -58,7 +56,6 @@ public class MainMenuGUI {
     	
     	Parent mainMenuPane = fxmlLoader.load();
     		
-    	mainMenu.getMainPane().getChildren().clear();
     	mainMenu.getMainPane().setCenter(mainMenuPane);
     }
 

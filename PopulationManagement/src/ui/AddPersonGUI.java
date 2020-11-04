@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -37,8 +38,8 @@ public class AddPersonGUI {
     @FXML
     private RadioButton radioButtonFemale;
 
-    @FXML 
-    private TextField textFieldBirthdate;
+    @FXML
+    private DatePicker datePickerBirthDate;
 
     @FXML
     private TextField textFieldHeight;
@@ -48,14 +49,43 @@ public class AddPersonGUI {
 
     @FXML
     public void addPerson(ActionEvent event) throws IOException {
-
+    	
+    	//Getting values
+    	String name = textFieldFirstName.getText();
+    	String lastName = textFieldLastName.getText();
+    	String gender = ((RadioButton)toogleGroupGender.getSelectedToggle()).getText();
+    	String birthDate = datePickerBirthDate.getValue().toString();
+    	String height = textFieldHeight.getText();
+    	String nationality = textFieldNationality.getText();
+    	
+    	//Control
+    	if (name.length() == 0 || name.contains("\\d+")) {
+    		throw new IllegalArgumentException("First name");
+    	}
+    	
+       	if (lastName.length() == 0 || lastName.contains("\\d+")) {
+    		throw new IllegalArgumentException("Last name");
+    	}
+       	
+       	if (birthDate.length() == 0) {
+       		throw new IllegalArgumentException("Birth Date");
+       	}
+       	
+       	if (height.length() == 0 || height.contains("\\D+")) {
+       		throw new IllegalArgumentException("Height");
+       	}
+       	
+       	if (nationality.length() == 0 || name.contains("\\d+")) {
+       		throw new IllegalArgumentException("Nationality");
+       	}
+       	
+       	//TERMINAR AGREGAR
+       	
       	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlFiles/MainMenuScreen.fxml"));
     	fxmlLoader.setController(mainMenu);
     	
     	Parent mainMenuPane = fxmlLoader.load();
     		
-    	welcome.getMainPane().getChildren().clear();
     	welcome.getMainPane().setCenter(mainMenuPane);
     }
-
 }

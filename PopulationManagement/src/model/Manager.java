@@ -21,15 +21,15 @@ public class Manager {
 	public static final String agesPath = "data/ages.csv";
 	public static final String allowedPath = "data/allowedCountries.txt";
 	
+	//Data Structure
 	private AVLTree<String, Record> tree;
 	
+	//Data Bases
 	private ArrayList<String> names;
 	private ArrayList<String> lastNames;
 	private ArrayList<String> ages;
 	private ArrayList<String> population;
 	private Record[] generatedRecords;
-	
-	
 	public Manager() {
 		tree = new AVLTree<String,Record>();
 		names = new ArrayList<>();
@@ -222,7 +222,7 @@ public class Manager {
 		
 		return record;
 	}
-
+	
 	public void setRecords(Record[] records) {
 		generatedRecords = records;
 	}
@@ -237,6 +237,9 @@ public class Manager {
 	}
 	
 	private ArrayList<String> searchByName(ArrayList<String> names,Node<String,Record> current,String name) {
+		if(current==null) {
+			return names;
+		}
 		String toCompare = current.getValue().getName().substring(0,name.length());
 		if(current.getValue().getName().contains(name)) {
 			if(toCompare.contains(name)) {
@@ -244,8 +247,93 @@ public class Manager {
 			}
 		}
 		
-		searchByName();
+		searchByName(names,current.getLeft(),name);
+		
+		searchByName(names,current.getRight(),name);
 		return names;
 		
 	}
+	
+	public ArrayList<String> searchByLastName(String lastname) {
+		ArrayList<String> names= new ArrayList<String>();
+		Node<String,Record> node = tree.getRoot();
+		if(node!=null) {
+			return searchByLastName(names,node,lastname);
+		}
+		return null;
+	}
+	
+	private ArrayList<String> searchByLastName(ArrayList<String> names,Node<String,Record> current,String lastname) {
+		if(current==null) {
+			return names;
+		}
+		String toCompare = current.getValue().getLastname().substring(0,lastname.length());
+		if(current.getValue().getName().contains(lastname)) {
+			if(toCompare.contains(lastname)) {
+				names.add(current.getValue().getName());
+			}
+		}
+		
+		searchByName(names,current.getLeft(),lastname);
+		
+		searchByName(names,current.getRight(),lastname);
+		return names;
+		
+	}
+	
+	public ArrayList<String> searchByCode(String code) {
+		ArrayList<String> names= new ArrayList<String>();
+		Node<String,Record> node = tree.getRoot();
+		if(node!=null) {
+			return searchByCode(names,node,code);
+		}
+		return null;
+	}
+	
+	private ArrayList<String> searchByCode(ArrayList<String> names,Node<String,Record> current,String code) {
+		if(current==null) {
+			return names;
+		}
+		String toCompare = current.getValue().getCode().substring(0,code.length());
+		if(current.getValue().getName().contains(code)) {
+			if(toCompare.contains(code)) {
+				names.add(current.getValue().getName());
+			}
+		}
+		
+		searchByName(names,current.getLeft(),code);
+		
+		searchByName(names,current.getRight(),code);
+		return names;
+		
+	}
+	
+	public ArrayList<String> searchByNameAndLastname(String name) {
+		ArrayList<String> names= new ArrayList<String>();
+		Node<String,Record> node = tree.getRoot();
+		if(node!=null) {
+			return searchByNameAndLastname(names,node,name);
+		}
+		return null;
+	}
+	
+	private ArrayList<String> searchByNameAndLastname(ArrayList<String> names,Node<String,Record> current,String name) {
+		if(current==null) {
+			return names;
+		}
+		String nameComplete = current.getValue().getName()+" "+current.getValue().getLastname();
+		String toCompare = nameComplete.substring(0,name.length());
+		if(current.getValue().getName().contains(name)) {
+			if(toCompare.contains(name)) {
+				names.add(current.getValue().getName());
+			}
+		}
+		
+		searchByName(names,current.getLeft(),name);
+		
+		searchByName(names,current.getRight(),name);
+		return names;
+		
+	}
+	
 }

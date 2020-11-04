@@ -47,6 +47,7 @@ public class GenerateDatabaseGUI {
     	}else {
     		int number = Integer.parseInt(textFieldRegistersNo.getText());
     		thread = new ProgressBarThread(manager, this, number);
+    		thread.setDaemon(true);
     		thread.start();
     	}
     }
@@ -54,13 +55,12 @@ public class GenerateDatabaseGUI {
     @FXML
     public void saveDatabase(ActionEvent event) throws IOException {
     	
-
+    	
       	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlFiles/MainMenuScreen.fxml"));
     	fxmlLoader.setController(mainMenu);
     	
     	Parent mainMenuPane = fxmlLoader.load();
     		
-    	welcome.getMainPane().getChildren().clear();
     	welcome.getMainPane().setCenter(mainMenuPane);
     }
     
@@ -71,6 +71,10 @@ public class GenerateDatabaseGUI {
     
     public void setProgressBar(double progress) {
     	progressBarGeneration.setProgress(progress);
+    }
+    
+    public void setTime(long time) {
+    	labelGenerationTime.setText(String.valueOf(time));
     }
 
 }

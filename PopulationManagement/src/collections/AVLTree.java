@@ -9,7 +9,19 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>{
 	
 	@Override
 	public boolean deleteValue(K key) {
-		return false;
+		boolean val=false;
+		Node<K,V> n =searchValue(key).getFather();
+		val=deleteValue(key);
+		if(n.getRight()!=null || n.getLeft()!=null) {
+			if(n.getRight()!=null) {
+				balance(n.getRight());
+			}else {
+				balance(n.getLeft());
+			}
+		}else {
+			balance(n);
+		}
+		return val;
 	}
 	
 	@Override
