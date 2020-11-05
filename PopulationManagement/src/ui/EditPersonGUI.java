@@ -1,14 +1,25 @@
  package ui;
 
+import collections.Node;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import model.Manager;
+import model.Record;
 
 public class EditPersonGUI {
+	private Manager manager;
+	private String key;
 
-    @FXML
+    public EditPersonGUI(Manager manager) {
+		super();
+		this.manager = manager;
+	}
+
+	@FXML
     private TextField nameCamp;
 
     @FXML
@@ -33,17 +44,35 @@ public class EditPersonGUI {
     private RadioButton femaleRButton;
     
     @FXML
-    void deleteRecord(ActionEvent event) {
+    public void deleteRecord(ActionEvent event) {
+    	
+    }
+
+    @FXML
+    public void goBack(ActionEvent event) {
 
     }
 
     @FXML
-    void goBack(ActionEvent event) {
-
+    public void saveRecord(ActionEvent event) {
+    	
     }
-
-    @FXML
-    void saveRecord(ActionEvent event) {
-
+    
+    public void initialize() {
+    	Node<String,Record> node = manager.searchValue(key);
+    	nameCamp.setText(node.getValue().getName());
+    	lastNameCamp.setText(node.getValue().getLastname());
+    	heightCamp.setText(String.valueOf(node.getValue().getHeight()));
+    	birthCamp.setText(node.getValue().getBirthDate());
+    	nacionalityCamp.setText(node.getValue().getNacionality());
+    	if(node.getValue().getGender().equals(Record.MALE)) {
+    		maleRButton.setSelected(true);
+    	}else {
+    		femaleRButton.setSelected(true);
+    	}
+    }
+    
+    public void setKey(String key) {
+    	this.key=key;
     }
 }

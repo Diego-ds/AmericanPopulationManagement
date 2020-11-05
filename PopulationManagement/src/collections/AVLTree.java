@@ -139,4 +139,8 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>{
 		return super.getRoot();
 		
 	}
+	public Node<K,V> searchValue(K key){
+		return super.searchValue(key);
+		
+	}
 }

@@ -22,7 +22,7 @@ public class MainMenuGUI {
 		this.manager = manager;
 		this.mainMenu = mainMenu;
 		addPerson = new AddPersonGUI(manager,mainMenu,this);
-		database = new GenerateDatabaseGUI(manager,mainMenu,this);
+		database = new GenerateDatabaseGUI(manager);
 		search = new SearchGUI(manager,mainMenu,this);
 	}
 

@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
@@ -16,11 +17,14 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import model.Manager;
+import threads.SearchThread;
 
 public class SearchGUI {
 	private Manager manager;
 	private WelcomeGUI welcome;
 	private MainMenuGUI mainMenu;
+	private EditPersonGUI edit;
+	
 	
     @FXML
     private TextField lookFortxt;
@@ -45,15 +49,29 @@ public class SearchGUI {
     private RadioButton nameLastNameOption;
 
     @FXML
-    public void editRecord(ActionEvent event) {
-
+    public void editRecord(ActionEvent event) throws IOException {
+    	if(spinner.getValue()==null) {
+    		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setHeaderText("Error");
+			alert.setTitle("Alert");
+			alert.setContentText("Search a valid record first");
+			alert.showAndWait();
+    	}else {
+    		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlFiles/EditPersonScreen.fxml"));
+        	fxmlLoader.setController(edit);
+        	Parent mainMenuPane = fxmlLoader.load();
+        	welcome.getMainPane().setCenter(mainMenuPane);
+        	String key [] = spinner.getValue().split(" ");
+        	edit.setKey(key[0]);
+    	}
+    	
     }
 
 	public SearchGUI(Manager manager, WelcomeGUI welcome, MainMenuGUI mainMenu) {
-		super();
 		this.manager = manager;
 		this.welcome = welcome;
 		this.mainMenu = mainMenu;
+		this.edit=new EditPersonGUI(manager);
 	}
 	
     @FXML
@@ -95,6 +113,8 @@ public class SearchGUI {
     
     @FXML
     public void initialize() {
-    	
+    	SearchThread thread = new SearchThread(manager,this);
+    	thread.setDaemon(true);
+    	thread.start();
     }
 }

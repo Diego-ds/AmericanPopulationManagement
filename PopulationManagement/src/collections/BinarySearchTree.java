@@ -253,8 +253,11 @@ public class BinarySearchTree<K extends Comparable<K>,V> implements IBinarySearc
 			
 			int height = Math.max(left, right) + 1;
 			node.setHeight(height);
-			updateHeight(node.getFather());
-			
+			if(node.getFather()==null) {
+				return;
+			}else {
+				updateHeight(node.getFather());
+			}
 		}
 	}
 }

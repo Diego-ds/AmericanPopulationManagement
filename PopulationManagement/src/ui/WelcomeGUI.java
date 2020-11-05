@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
 import model.Manager;
 
@@ -24,7 +25,11 @@ public class WelcomeGUI {
 
 	@FXML
     public void aboutUs(ActionEvent event) {
-
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setHeaderText("Hey");
+		alert.setTitle("Hope you having a great day!");
+		alert.setContentText("Greetings from Alejandro Fonseca and Diego Garcia");
+		alert.showAndWait();
     }
 
     @FXML

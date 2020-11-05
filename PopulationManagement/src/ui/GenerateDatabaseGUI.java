@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -16,15 +14,12 @@ import threads.ProgressBarThread;
 public class GenerateDatabaseGUI {
 	
 	private Manager manager;
-	private WelcomeGUI welcome;
-	private MainMenuGUI mainMenu;
 	private ProgressBarThread thread;
 	
-    public GenerateDatabaseGUI(Manager manager, WelcomeGUI welcome, MainMenuGUI mainMenu) {
+    public GenerateDatabaseGUI(Manager manager) {
 		
 		this.manager = manager;
-		this.welcome = welcome;
-		this.mainMenu = mainMenu;
+		
 	}
 
 	@FXML
@@ -54,14 +49,7 @@ public class GenerateDatabaseGUI {
 
     @FXML
     public void saveDatabase(ActionEvent event) throws IOException {
-    	
-    	
-      	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlFiles/MainMenuScreen.fxml"));
-    	fxmlLoader.setController(mainMenu);
-    	
-    	Parent mainMenuPane = fxmlLoader.load();
-    		
-    	welcome.getMainPane().setCenter(mainMenuPane);
+    	manager.saveData();
     }
     
     

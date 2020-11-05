@@ -34,7 +34,7 @@ public class ProgressBarThread extends Thread{
 				double recordN = (double)recordNumber;
 				
 				pr = index/recordN;
-				System.out.println(pr);
+				//System.out.println(pr);
 				records[i] = manager.generateRecord();
 				Platform.runLater(new Thread() {
 					@Override

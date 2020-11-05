@@ -152,7 +152,7 @@ public class Manager {
 				exit = true;
 			}
 		}
-		System.out.println("AGE: " + age);
+		//System.out.println("AGE: " + age);
 
 		//Height
 		double baseAge = 1.00; 
@@ -243,7 +243,7 @@ public class Manager {
 		String toCompare = current.getValue().getName().substring(0,name.length());
 		if(current.getValue().getName().contains(name)) {
 			if(toCompare.contains(name)) {
-				names.add(current.getValue().getName());
+				names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
 			}
 		}
 		
@@ -270,7 +270,7 @@ public class Manager {
 		String toCompare = current.getValue().getLastname().substring(0,lastname.length());
 		if(current.getValue().getName().contains(lastname)) {
 			if(toCompare.contains(lastname)) {
-				names.add(current.getValue().getName());
+				names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
 			}
 		}
 		
@@ -297,7 +297,7 @@ public class Manager {
 		String toCompare = current.getValue().getCode().substring(0,code.length());
 		if(current.getValue().getName().contains(code)) {
 			if(toCompare.contains(code)) {
-				names.add(current.getValue().getName());
+				names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
 			}
 		}
 		
@@ -325,7 +325,7 @@ public class Manager {
 		String toCompare = nameComplete.substring(0,name.length());
 		if(current.getValue().getName().contains(name)) {
 			if(toCompare.contains(name)) {
-				names.add(current.getValue().getName());
+				names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
 			}
 		}
 		
@@ -334,6 +334,19 @@ public class Manager {
 		searchByName(names,current.getRight(),name);
 		return names;
 		
+	}
+	
+	public Node<String,Record> searchValue(String key){
+		return tree.searchValue(key);
+		
+	}
+	
+	public void saveData() {
+		tree.setRoot(null);
+		for(int i=0;i<generatedRecords.length;i++) {
+			System.out.println(generatedRecords[i].getCode()+" "+generatedRecords[i].getName());
+			tree.insert(generatedRecords[i].getCode(), generatedRecords[i]);
+		}
 	}
 	
 }
