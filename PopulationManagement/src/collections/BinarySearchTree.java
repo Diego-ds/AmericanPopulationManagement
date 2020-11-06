@@ -1,20 +1,23 @@
 package collections;
 
+import java.io.Serializable;
 
-
-public class BinarySearchTree<K extends Comparable<K>,V> implements IBinarySearchTree<K,V> {
+@SuppressWarnings("serial")
+public class BinarySearchTree<K extends Comparable<K>,V> implements IBinarySearchTree<K,V>,
+	Serializable{
 	
 	private Node<K,V> root;
 	
 	@Override
-	public void insert(K key,V value) {
+	public Node<K,V> insert(K key,V value) {
 		Node<K,V> toAdd = new Node<K,V>(key,value);
 		if (root == null) {
-			root = new Node<K,V>(key,value);
+			root = toAdd;
 		}else {
 			insert(toAdd,root);
 			updateHeight(toAdd);
-		}	
+		}
+		return toAdd;
 	}
 	
 	private void insert(Node<K,V> toAdd, Node<K,V> actual) {

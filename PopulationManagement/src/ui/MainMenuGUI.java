@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import model.Manager;
 
@@ -28,7 +29,9 @@ public class MainMenuGUI {
 
 	@FXML
     private Label labelTotalPeople;
-
+	
+    @FXML
+    private Button searchButton;
     @FXML
     public void loadAddPerson(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlFiles/AddPersonScreen.fxml"));
@@ -56,6 +59,16 @@ public class MainMenuGUI {
     	fxmlLoader.setController(search);
     	Parent mainMenuPane = fxmlLoader.load();	
     	mainMenu.getMainPane().setCenter(mainMenuPane);
+    }
+    
+    public void initialize() {
+    	if(manager.getPersonCounter()==0) {
+    		labelTotalPeople.setText(String.valueOf(manager.getPersonCounter()));
+    		searchButton.setDisable(true);
+    	}else {
+    		labelTotalPeople.setText(String.valueOf(manager.getPersonCounter()));
+    		searchButton.setDisable(false);
+    	}
     }
 
 }

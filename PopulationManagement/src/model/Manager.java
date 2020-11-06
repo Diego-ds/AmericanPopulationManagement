@@ -1,11 +1,12 @@
 package model;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
@@ -164,7 +165,6 @@ public class Manager {
 				exit = true;
 			}
 		}
-		//System.out.println("AGE: " + age);
 
 		//Height
 		double baseAge = 1.00; 
@@ -253,7 +253,7 @@ public class Manager {
 		
 		String code = generateCode();
 		Record record = new Record(code, name, lastName, gender, birthDate, height, nationality);
-		tree.insert(code, record);
+		tree.insertAVL(code, record);
 	}
 	
 	private ArrayList<String> searchByName(ArrayList<String> names,Node<String,Record> current,String name) {
@@ -378,15 +378,39 @@ public class Manager {
 	
 	public void saveData() {
 		tree.setRoot(null);
+		tree.setCounter(0);
 		for(int i=0;i<generatedRecords.length;i++) {
 			System.out.println(generatedRecords[i].getCode()+" "+generatedRecords[i].getName());
-			tree.insert(generatedRecords[i].getCode(), generatedRecords[i]);
+			tree.insertAVL(generatedRecords[i].getCode(), generatedRecords[i]);
 		}
-		System.out.println(tree.getRoot().getValue().getCode());
+		//System.out.println(tree.getRoot().getValue().getCode());
 	}
 	
 	public void deleteValue(String key) {
 		tree.deleteValue(key);
 	}
 	
+	public void saveTree() throws IOException {
+		FileOutputStream fos = new FileOutputStream("data/status");
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(tree);
+		oos.close();
+		fos.close();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void chargeTree() throws IOException, ClassNotFoundException {
+		FileInputStream file = new FileInputStream("data/status");
+        ObjectInputStream ois = new ObjectInputStream(file);
+        AVLTree<String,Record> aux = (AVLTree<String,Record>) ois.readObject();
+        if(aux!=null) {
+            tree = aux;
+        }
+        ois.close();
+        file.close();
+	}
+	
+	public int getPersonCounter() {
+		return tree.getCounter();
+	}
 }

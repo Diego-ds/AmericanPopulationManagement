@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #d6f8ff;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #d6f8ff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="93.0" prefHeight="275.0" prefWidth="275.0" spacing="30.0">
          <children>
@@ -37,7 +37,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button alignment="TOP_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#loadSearchPerson" prefHeight="44.0" prefWidth="250.0" text="Search Person">
+            <Button fx:id="searchButton" alignment="TOP_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#loadSearchPerson" prefHeight="44.0" prefWidth="250.0" text="Search Person">
                <font>
                   <Font name="Lucida Sans Unicode" size="20.0" />
                </font>

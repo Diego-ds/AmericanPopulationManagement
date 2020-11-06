@@ -16,7 +16,7 @@ class AVLTest {
 		avltree = new AVLTree<Integer,Integer>();
 		Integer[] num = new Integer[] {1,2,3,4,5,6,7,8,9,10};
 		for (int i = 0; i < num.length; i++) {
-			avltree.insert(num[i], num[i]);
+			avltree.insertAVL(num[i], num[i]);
 		}
 	}
 	
@@ -24,7 +24,7 @@ class AVLTest {
 		avltree = new AVLTree<Integer,Integer>();
 		Integer[] num = new Integer[] {50,100,0,25,-25,125,75,30};
 		for (int i = 0; i < num.length; i++) {
-			avltree.insert(num[i], num[i]);
+			avltree.insertAVL(num[i], num[i]);
 		}
 	}
 	
@@ -33,9 +33,10 @@ class AVLTest {
 	}
 	
 	@Test
-	public void InsertTest () {
+	public void insertAVLTest () {
 		setup1();
 		Node<Integer, Integer> node = avltree.getRoot(); //Root should be node with key 4
+		System.out.println(node.getValue());
 		assertTrue(node.getKey() == 4 && node.getHeight() == 3);
 		node = avltree.searchValue(9);
 		assertTrue(node.getKey() == 9 && node.getHeight() == 1);
@@ -45,50 +46,108 @@ class AVLTest {
 	}
 	
 	@Test
-	public void InsertTest2 () {
-		//First test
-		setup1();
-		avltree.insert(10, 10);
-		avltree.insert(5, 5);
-		avltree.insert(6, 6);
-		Node<Integer,Integer> node = avltree.getRoot();
-		Assertions.assertTrue(node.getKey()==6);
-		/*System.out.println("height "+node.getHeight());
-		System.out.println("height "+node.getRight().getHeight());
-		System.out.println("height "+node.getRight().getRight().getHeight());
-		System.out.println(node.getValue());
-		System.out.println(node.getRight());
-		System.out.println(node.getLeft());*/
+	public void balanceTest1 () {
+		setup3();
+		avltree.insertAVL(5, 5);
+		avltree.insertAVL(3, 3);
+		avltree.insertAVL(8, 8);
+		avltree.insertAVL(6, 6);
+		avltree.insertAVL(9, 9);
+		avltree.insertAVL(10, 10);
+		
+		//Root
+		assertTrue(avltree.getRoot().getKey() == 8);
+		//Root left child
+		assertTrue(avltree.getRoot().getLeft().getKey() == 5);
+		//Root right child
+		assertTrue(avltree.getRoot().getRight().getKey() == 9);
+		//Root left child right child
+		assertTrue(avltree.getRoot().getLeft().getRight().getKey() == 6);
 	}
 	
 	@Test
-	public void InsertTest3 () {
-		//First test
-		setup1();
-		avltree.insert(5, 5);
-		avltree.insert(4, 4);
-		avltree.insert(2, 2);
-		Node<Integer,Integer> node = avltree.getRoot();
-		Assertions.assertTrue(node.getKey()==4);
-		/*System.out.println("height "+node.getHeight());
-		System.out.println("height "+node.getRight().getHeight());
-		System.out.println("height "+node.getRight().getRight().getHeight());
-		System.out.println(node.getValue());
-		System.out.println(node.getRight());
-		System.out.println(node.getLeft());*/
+	public void balanceTest2() {
+		setup3();
+		avltree.insertAVL(5, 5);
+		avltree.insertAVL(10, 10);
+		avltree.insertAVL(3, 3);
+		avltree.insertAVL(2, 2);
+		avltree.insertAVL(7, 7);
+		avltree.insertAVL(11, 11);
+		avltree.insertAVL(5, 5);
+		avltree.insertAVL(12, 12);
+		avltree.insertAVL(6, 6);
+		avltree.insertAVL(8, 8);
+		avltree.insertAVL(9, 9);
+		
+		//Root
+		assertTrue(avltree.getRoot().getKey() == 7);
+		//Root left child
+		assertTrue(avltree.getRoot().getLeft().getKey() == 5);
+		//Root right child
+		assertTrue(avltree.getRoot().getRight().getKey() == 10);
+		//Root left child right child
+		assertTrue(avltree.getRoot().getLeft().getRight().getKey() == 6);
+		//Root right child left child
+		assertTrue(avltree.getRoot().getRight().getLeft().getKey() == 8);
 	}
 	
+	@Test
+	public void balanceTest3() {
+		setup3();
+		avltree.insertAVL(10, 10);
+		avltree.insertAVL(11, 11);
+		avltree.insertAVL(7, 7);
+		avltree.insertAVL(6, 6);
+		avltree.insertAVL(8, 8);
+		avltree.insertAVL(5, 5);
+		
+		//Root
+		assertTrue(avltree.getRoot().getKey() == 7);
+		//Root left child
+		assertTrue(avltree.getRoot().getLeft().getKey() == 6);
+		//Root right child
+		assertTrue(avltree.getRoot().getRight().getKey() == 10);
+		//Root right child left child
+		assertTrue(avltree.getRoot().getRight().getLeft().getKey() == 8);
+	}
+	
+	@Test
+	public void balanceTest4() {
+		setup3();
+		avltree.insertAVL(10, 10);
+		avltree.insertAVL(11, 11);
+		avltree.insertAVL(4, 4);
+		avltree.insertAVL(3, 3);
+		avltree.insertAVL(6, 6);
+		avltree.insertAVL(12, 12);
+		avltree.insertAVL(5, 5);
+		avltree.insertAVL(7, 7);
+		avltree.insertAVL(2, 2);
+		avltree.insertAVL(9, 9);
+		
+		//Root
+		assertTrue(avltree.getRoot().getKey() == 6);
+		//Root left child
+		assertTrue(avltree.getRoot().getLeft().getKey() == 4);
+		//Root right child
+		assertTrue(avltree.getRoot().getRight().getKey() == 10);
+		//Root left child right child
+		assertTrue(avltree.getRoot().getLeft().getRight().getKey() == 5);
+		//Root right child left child
+		assertTrue(avltree.getRoot().getRight().getLeft().getKey() == 7);
+	}
 	
 	@Test
 	public void searchTest () {
 		//First test
 		setup1();
-		avltree.insert(1, 1);
-		avltree.insert(2, 2);
-		avltree.insert(3, 3);
-		avltree.insert(-1, -1);
-		avltree.insert(-2, -2);
-		avltree.insert(-3, -3);
+		avltree.insertAVL(1, 1);
+		avltree.insertAVL(2, 2);
+		avltree.insertAVL(3, 3);
+		avltree.insertAVL(-1, -1);
+		avltree.insertAVL(-2, -2);
+		avltree.insertAVL(-3, -3);
 		Assertions.assertTrue(avltree.searchValue(1).getValue()==1);
 		Assertions.assertTrue(avltree.searchValue(3).getValue()==3);
 		Assertions.assertTrue(avltree.searchValue(2).getValue()==2);

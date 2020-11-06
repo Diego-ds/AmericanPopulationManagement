@@ -1,6 +1,9 @@
 package model;
 
-public class Record {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Record implements Serializable{
 	public static final String MALE = "Male";
 	public static final String FEMALE = "Female";
 	private String code;

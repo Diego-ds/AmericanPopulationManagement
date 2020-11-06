@@ -1,10 +1,16 @@
 package collections;
 
+import java.io.Serializable;
 
-public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>{
+@SuppressWarnings("serial")
+public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V> 
+	implements Serializable {
 	
-	public AVLTree() {
+	private int counter;
+	
+	public AVLTree(){
 		super();
+		counter = 0;
 	}
 	
 	/* ARREGLAR EL DESGRACIADO ARBOL
@@ -13,10 +19,10 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>{
 	
 	@Override
 	public boolean deleteValue(K key) {
-		boolean val=false;
-		Node<K,V> n =searchValue(key).getFather();
+		boolean val = false;
+		Node<K,V> n = searchValue(key).getFather();
 		deleteValue(key);
-		if(n.getRight()!=null || n.getLeft()!=null) {
+		if(n.getRight() != null || n.getLeft() != null) {
 			if(n.getRight()!=null) {
 				balance(n.getRight());
 			}else {
@@ -25,14 +31,15 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>{
 		}else {
 			balance(n);
 		}
+		counter--;
 		return val;
 	}
 	
-	@Override
-	public void insert(K key,V value) {
-		super.insert(key,value);
-		Node<K,V> n = searchValue(key);
+	
+	public void insertAVL(K key,V value) {
+		Node<K,V> n =super.insert(key,value);
 		balance(n);
+		counter++;
 	}
 	
 
@@ -47,7 +54,6 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>{
 	
 	public int balanceFactor (Node<K,V> node) {
 		if(node!=null) {
-			
 			int right = height(node.getRight());
 			int left = height(node.getLeft());
 			
@@ -56,8 +62,8 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>{
 		return 0;
 	}
 	
-	public void balance(Node<K,V> node) {
-		if(node!=null) {
+	public void balance (Node<K,V> node) {
+		while(node!=null) {
 			//System.out.println(node.getHeight()+" key "+node.getKey()); //print
 			int balanceFactor = balanceFactor(node);
 			if(balanceFactor>1) {
@@ -65,7 +71,7 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>{
 			}else if(balanceFactor<-1) {
 				leftCases(node);
 			}
-			balance(node.getFather());
+			node = node.getFather();
 		}
 	}
 	
@@ -141,6 +147,13 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>{
 	
 	public Node<K,V> getRoot(){
 		return super.getRoot();
-		
+	}
+
+	public int getCounter() {
+		return counter;
+	}
+
+	public void setCounter(int counter) {
+		this.counter = counter;
 	}
 }

@@ -12,11 +12,13 @@ public class SearchThread extends Thread{
 	private boolean flag;
 	private String controller;
 	private ArrayList<String> spinnerData;
+	
 	public SearchThread(Manager manager, SearchGUI searchScreen) {
+		spinnerData = new ArrayList<String>();
 		this.manager = manager;
 		this.searchScreen = searchScreen;
 		flag=true;
-		controller="";
+		controller = "";
 	}
 	
 	@Override
@@ -29,7 +31,6 @@ public class SearchThread extends Thread{
 				
 			}else {
 				int option = searchScreen.getOption();
-				System.out.println(option);
 				if(option==1) {
 					spinnerData= manager.searchByName(toLook);
 					controller=toLook;

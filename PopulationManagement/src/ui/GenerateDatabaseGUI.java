@@ -64,5 +64,9 @@ public class GenerateDatabaseGUI {
     public void setTime(long time) {
     	labelGenerationTime.setText(String.valueOf(time));
     }
+    
+    public void setVisible(boolean val) {
+    	progressBarGeneration.setVisible(val);
+    }
 
 }

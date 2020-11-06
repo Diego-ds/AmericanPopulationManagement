@@ -1,6 +1,9 @@
 package collections;
 
-public class Node<K extends Comparable<K>,V> {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Node<K extends Comparable<K>,V> implements Serializable{
 	
 	private int height;
 	private K key;
@@ -10,12 +13,12 @@ public class Node<K extends Comparable<K>,V> {
 	private Node<K,V> father;
 
 	public Node (K key,V value) {
-		this.value=value;
-		this.key=key;
+		this.value = value;
+		this.key = key;
 		left = null;
 		right = null;
-		father=null;
-		this.height=0;
+		father = null;
+		this.height = 0;
 	}
 
 	public K getKey() {

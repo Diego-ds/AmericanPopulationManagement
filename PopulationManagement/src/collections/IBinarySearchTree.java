@@ -1,9 +1,7 @@
 package collections;
 
-
-
-public interface IBinarySearchTree<K extends Comparable<K>,V> {
-	public void insert(K key, V value);
+public interface IBinarySearchTree<K extends Comparable<K>,V>{
+	public Node<K,V> insert(K key, V value);
 	public boolean deleteValue(K key);
 	//public int height(Node <K,V> root);
 	//public int weight();

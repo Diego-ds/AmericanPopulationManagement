@@ -21,8 +21,13 @@ public class Main extends Application {
 	
 	public Main() throws IOException {
 		manager=new Manager();
-		welcome = new WelcomeGUI(manager);
+		try {
+			manager.chargeTree();
+		} catch (ClassNotFoundException  | IOException e) {
+			manager=new Manager();
+		} 
 		manager.loadData();
+		welcome = new WelcomeGUI(manager);
 	}
 	
 	public static void main(String[] args) {
@@ -42,7 +47,11 @@ public class Main extends Application {
 		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 		    @Override
 		    public void handle(WindowEvent t) {
-		    	//SERIALIZAR ANTES DE CERRAR
+		    	try {
+					manager.saveTree();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 		        Platform.exit();
 		        System.exit(0);
 		    }

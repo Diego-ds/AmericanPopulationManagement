@@ -26,15 +26,24 @@ public class ProgressBarThread extends Thread{
 	@Override
 	public void run() {
 		long time1 = System.currentTimeMillis();
+		long time2=System.currentTimeMillis();
+		
 		Record[] records = new Record[recordNumber];
 		
 		for(int i = 0;i<recordNumber;i++) {
 			try {
+				time2 =System.currentTimeMillis();
+				if(time2-time1 > 1000) {
+					Platform.runLater(new Thread() {
+						@Override
+						public void run() {
+							database.setVisible(true);
+						}
+					});
+				}
 				double index = (double)i;
 				double recordN = (double)recordNumber;
-				
 				pr = index/recordN;
-				//System.out.println(pr);
 				records[i] = manager.generateRecord();
 				Platform.runLater(new Thread() {
 					@Override
@@ -50,7 +59,7 @@ public class ProgressBarThread extends Thread{
 			}
 		}
 		manager.setRecords(records);
-		long time2 = System.currentTimeMillis();
+		time2 = System.currentTimeMillis();
 		time=time2-time1;
 		Platform.runLater(new Thread() {
 			@Override
