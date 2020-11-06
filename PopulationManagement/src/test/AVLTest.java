@@ -34,19 +34,14 @@ class AVLTest {
 	
 	@Test
 	public void InsertTest () {
-		//First test
 		setup1();
-		avltree.insert(1, 1);
-		avltree.insert(2, 2);
-		avltree.insert(3, 3);
-		Node<Integer,Integer> node = avltree.getRoot();
-		//System.out.println(node.getKey());
-		/*System.out.println("height "+node.getHeight());
-		System.out.println("height "+node.getRight().getHeight());
-		System.out.println("height "+node.getRight().getRight().getHeight());
-		System.out.println(node.getValue());
-		System.out.println(node.getRight());
-		System.out.println(node.getLeft());*/
+		Node<Integer, Integer> node = avltree.getRoot(); //Root should be node with key 4
+		assertTrue(node.getKey() == 4 && node.getHeight() == 3);
+		node = avltree.searchValue(9);
+		assertTrue(node.getKey() == 9 && node.getHeight() == 1);
+		node = avltree.searchValue(3);
+		assertTrue(node.getKey() == 3 && node.getHeight() == 0);
+		assertNull(avltree.searchValue(13));
 	}
 	
 	@Test

@@ -7,6 +7,10 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>{
 		super();
 	}
 	
+	/* ARREGLAR EL DESGRACIADO ARBOL
+	 * AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	 */
+	
 	@Override
 	public boolean deleteValue(K key) {
 		boolean val=false;
@@ -27,7 +31,7 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>{
 	@Override
 	public void insert(K key,V value) {
 		super.insert(key,value);
-		Node<K,V> n =searchValue(key);
+		Node<K,V> n = searchValue(key);
 		balance(n);
 	}
 	
