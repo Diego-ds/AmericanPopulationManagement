@@ -30,7 +30,7 @@ public class MainMenuGUI {
     private Label labelTotalPeople;
 
     @FXML
-    void loadAddPerson(ActionEvent event) throws IOException {
+    public void loadAddPerson(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlFiles/AddPersonScreen.fxml"));
     	fxmlLoader.setController(addPerson);
     	
@@ -40,7 +40,7 @@ public class MainMenuGUI {
     }
 
     @FXML
-    void loadGenerateDatabase(ActionEvent event) throws IOException {
+    public void loadGenerateDatabase(ActionEvent event) throws IOException {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlFiles/GenerateDatabaseScreen.fxml"));
     	fxmlLoader.setController(database);
     	
@@ -50,12 +50,11 @@ public class MainMenuGUI {
     }
 
     @FXML
-    void loadSearchPerson(ActionEvent event) throws IOException {
+    public void loadSearchPerson(ActionEvent event) throws IOException {
+    	search.setThreadFlag(true);
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlFiles/SearchScreen.fxml"));
     	fxmlLoader.setController(search);
-    	
-    	Parent mainMenuPane = fxmlLoader.load();
-    		
+    	Parent mainMenuPane = fxmlLoader.load();	
     	mainMenu.getMainPane().setCenter(mainMenuPane);
     }
 

@@ -30,6 +30,7 @@ public class Manager {
 	private ArrayList<String> ages;
 	private ArrayList<String> population;
 	private Record[] generatedRecords;
+	
 	public Manager() {
 		tree = new AVLTree<String,Record>();
 		names = new ArrayList<>();
@@ -90,6 +91,7 @@ public class Manager {
 		populationReader.close();
 		allowedReader.close();
 		
+		
 		//All data bases need at least one line
 		if (names.size() != 0 && lastNames.size() != 0 && ages.size() != 0 && 
 				population.size() != 0) {
@@ -99,7 +101,20 @@ public class Manager {
 			return false;
 		}
 	}
-
+	
+	public String generateCode() {
+		Random r = new Random();
+		
+		long numeric = r.nextLong(); //Gets a random long number
+		if (Math.signum(numeric) == -1) {
+			numeric *= -1;
+		}
+		int letterAscii = 65 + r.nextInt(26); //Gets a random capital letter
+		char letter = (char) letterAscii; 
+		String code = letter + "" + numeric; //Union between letter and number
+		return code;
+	}
+	
 	public Record generateRecord() throws IOException {
 
 		//Records Generation
@@ -107,10 +122,7 @@ public class Manager {
 		boolean exit = false;
 
 		//Code
-		long numeric = r.nextLong(); //Gets a random long number
-		int letterAscii = 65 + r.nextInt(26); //Gets a random capital letter
-		char letter = (char) letterAscii; 
-		String code = letter + "" + numeric; //Union between letter and number
+		String code = generateCode();
 
 		//Name
 		int index = r.nextInt(names.size() - 1); //Gets a random index in the name database
@@ -236,16 +248,28 @@ public class Manager {
 		return null;
 	}
 	
+	public void addRecord(String name, String lastName, String gender, String birthDate,
+			double height, String nationality) {
+		
+		String code = generateCode();
+		Record record = new Record(code, name, lastName, gender, birthDate, height, nationality);
+		tree.insert(code, record);
+	}
+	
 	private ArrayList<String> searchByName(ArrayList<String> names,Node<String,Record> current,String name) {
 		if(current==null) {
 			return names;
 		}
-		String toCompare = current.getValue().getName().substring(0,name.length());
-		if(current.getValue().getName().contains(name)) {
-			if(toCompare.contains(name)) {
-				names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
-			}
+		String toCompare="";
+		if(name.length()>=current.getValue().getName().length()) {
+			toCompare=name;
+		}else {
+			toCompare = current.getValue().getName().substring(0,name.length());
 		}
+		if(toCompare.contains(name)) {
+			names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
+		}
+		
 		
 		searchByName(names,current.getLeft(),name);
 		
@@ -267,16 +291,20 @@ public class Manager {
 		if(current==null) {
 			return names;
 		}
-		String toCompare = current.getValue().getLastname().substring(0,lastname.length());
-		if(current.getValue().getName().contains(lastname)) {
-			if(toCompare.contains(lastname)) {
-				names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
-			}
+		String toCompare="";
+		if(lastname.length()>=current.getValue().getLastname().length()) {
+			toCompare=lastname;
+		}else {
+			toCompare = current.getValue().getLastname().substring(0,lastname.length());
 		}
+		if(toCompare.contains(lastname)) {
+			names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
+		}
+
 		
-		searchByName(names,current.getLeft(),lastname);
+		searchByLastName(names,current.getLeft(),lastname);
 		
-		searchByName(names,current.getRight(),lastname);
+		searchByLastName(names,current.getRight(),lastname);
 		return names;
 		
 	}
@@ -294,16 +322,21 @@ public class Manager {
 		if(current==null) {
 			return names;
 		}
-		String toCompare = current.getValue().getCode().substring(0,code.length());
-		if(current.getValue().getName().contains(code)) {
-			if(toCompare.contains(code)) {
-				names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
-			}
+		String toCompare="";
+		if(code.length()>=current.getValue().getCode().length()) {
+			toCompare=code;
+		}else {
+			toCompare = current.getValue().getCode().substring(0,code.length());
 		}
 		
-		searchByName(names,current.getLeft(),code);
+		if(toCompare.contains(code)) {
+			names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
+		}
+
+
+		searchByCode(names,current.getLeft(),code);
 		
-		searchByName(names,current.getRight(),code);
+		searchByCode(names,current.getRight(),code);
 		return names;
 		
 	}
@@ -322,23 +355,25 @@ public class Manager {
 			return names;
 		}
 		String nameComplete = current.getValue().getName()+" "+current.getValue().getLastname();
-		String toCompare = nameComplete.substring(0,name.length());
-		if(current.getValue().getName().contains(name)) {
-			if(toCompare.contains(name)) {
-				names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
-			}
+		String toCompare ="";
+		if(name.length()>=nameComplete.length()) {
+			toCompare=name;
+		}else {
+			toCompare = nameComplete.substring(0,name.length());
 		}
+		if(toCompare.contains(name)) {
+			names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
+		}
+
+		searchByNameAndLastname(names,current.getLeft(),name);
 		
-		searchByName(names,current.getLeft(),name);
-		
-		searchByName(names,current.getRight(),name);
+		searchByNameAndLastname(names,current.getRight(),name);
 		return names;
 		
 	}
 	
 	public Node<String,Record> searchValue(String key){
 		return tree.searchValue(key);
-		
 	}
 	
 	public void saveData() {
@@ -347,6 +382,11 @@ public class Manager {
 			System.out.println(generatedRecords[i].getCode()+" "+generatedRecords[i].getName());
 			tree.insert(generatedRecords[i].getCode(), generatedRecords[i]);
 		}
+		System.out.println(tree.getRoot().getValue().getCode());
+	}
+	
+	public void deleteValue(String key) {
+		tree.deleteValue(key);
 	}
 	
 }

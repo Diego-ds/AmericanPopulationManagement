@@ -1,11 +1,14 @@
  package ui;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -49,43 +52,72 @@ public class AddPersonGUI {
 
     @FXML
     public void addPerson(ActionEvent event) throws IOException {
-    	
-    	//Getting values
-    	String name = textFieldFirstName.getText();
-    	String lastName = textFieldLastName.getText();
-    	String gender = ((RadioButton)toogleGroupGender.getSelectedToggle()).getText();
-    	String birthDate = datePickerBirthDate.getValue().toString();
-    	String height = textFieldHeight.getText();
-    	String nationality = textFieldNationality.getText();
-    	
-    	//Control
-    	if (name.length() == 0 || name.contains("\\d+")) {
-    		throw new IllegalArgumentException("First name");
-    	}
-    	
-       	if (lastName.length() == 0 || lastName.contains("\\d+")) {
-    		throw new IllegalArgumentException("Last name");
-    	}
-       	
-       	if (birthDate.length() == 0) {
-       		throw new IllegalArgumentException("Birth Date");
-       	}
-       	
-       	if (height.length() == 0 || height.contains("\\D+")) {
-       		throw new IllegalArgumentException("Height");
-       	}
-       	
-       	if (nationality.length() == 0 || name.contains("\\d+")) {
-       		throw new IllegalArgumentException("Nationality");
-       	}
-       	
-       	//TERMINAR AGREGAR
-       	
-      	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlFiles/MainMenuScreen.fxml"));
-    	fxmlLoader.setController(mainMenu);
-    	
-    	Parent mainMenuPane = fxmlLoader.load();
+
+    	try {
+    		//Creating necessary variables
+    		String name;
+    		String lastName;
+    		String gender;
+    		String birthDate;
+    		String heightString;
+    		String nationality;
     		
-    	welcome.getMainPane().setCenter(mainMenuPane);
+    		//Getting values
+    		name = textFieldFirstName.getText();
+  
+    		lastName = textFieldLastName.getText();
+
+    		gender = ((RadioButton)toogleGroupGender.getSelectedToggle()).getText();
+    		
+    		if (datePickerBirthDate.getValue() == null) {
+    			throw new IllegalArgumentException("Birth Date");
+    		}
+    		
+    		else {
+    			birthDate = datePickerBirthDate.getValue().toString();
+    		}
+    		
+    		heightString = textFieldHeight.getText();
+    		
+    		nationality = textFieldNationality.getText();
+    		
+    		//Control
+    		if (name.length() == 0 || name.matches(".*\\d.*")) {
+    			throw new IllegalArgumentException("First name");
+    		}
+
+    		if (lastName.length() == 0 || lastName.matches(".*\\d.*")) {
+    			throw new IllegalArgumentException("Last name");
+    		}
+
+    		if (datePickerBirthDate.getValue().isAfter(LocalDate.now())) {
+    			throw new IllegalArgumentException("Birth Date");
+    		}
+    		
+    		double height = Double.parseDouble(heightString);
+
+    		if (nationality.length() == 0 || nationality.matches(".*\\d.*")) {
+    			throw new IllegalArgumentException("Nationality");
+    		}
+
+    		manager.addRecord(name, lastName, gender, birthDate, height, nationality);
+    		
+    		Alert alert = new Alert(AlertType.INFORMATION);
+    		alert.setTitle("Congrats!");
+    		alert.setHeaderText("Successful operation");
+    		alert.setContentText("Person added successfully!");
+
+    		alert.showAndWait();
+    	}	
+    	
+    	catch (IllegalArgumentException iae) {
+    		Alert alert = new Alert(AlertType.ERROR);
+    		alert.setTitle("Something went wrong...");
+    		alert.setHeaderText("Input error");
+    		alert.setContentText("The following field is empty or has incorrect values: \n" +
+    				iae.getMessage());
+
+    		alert.showAndWait();
+    	}
     }
 }

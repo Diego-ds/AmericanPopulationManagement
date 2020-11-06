@@ -75,19 +75,7 @@
                   </ImageView>
                </graphic>
             </Label>
-            <Button layoutX="43.0" layoutY="327.0" mnemonicParsing="false" onAction="#goBack" prefHeight="40.0" prefWidth="127.0" text="Go Back">
-               <font>
-                  <Font name="Lucida Sans Unicode" size="14.0" />
-               </font>
-               <graphic>
-                  <ImageView fitHeight="33.0" fitWidth="37.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/atras.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button layoutX="407.0" layoutY="327.0" mnemonicParsing="false" onAction="#saveRecord" prefHeight="40.0" prefWidth="127.0" text="Save">
+            <Button layoutX="387.0" layoutY="327.0" mnemonicParsing="false" onAction="#saveRecord" prefHeight="40.0" prefWidth="127.0" text="Save">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>
@@ -99,7 +87,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="231.0" layoutY="327.0" mnemonicParsing="false" onAction="#deleteRecord" prefHeight="40.0" prefWidth="127.0" text="Delete">
+            <Button layoutX="85.0" layoutY="327.0" mnemonicParsing="false" onAction="#deleteRecord" prefHeight="40.0" prefWidth="127.0" text="Delete">
                <font>
                   <Font name="Lucida Sans Unicode" size="14.0" />
                </font>

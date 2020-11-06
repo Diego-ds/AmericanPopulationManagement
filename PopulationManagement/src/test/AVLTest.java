@@ -13,7 +13,23 @@ class AVLTest {
 	private AVLTree<Integer,Integer> avltree;
 	
 	public void setup1() {
-		avltree= new AVLTree<Integer,Integer>();
+		avltree = new AVLTree<Integer,Integer>();
+		Integer[] num = new Integer[] {1,2,3,4,5,6,7,8,9,10};
+		for (int i = 0; i < num.length; i++) {
+			avltree.insert(num[i], num[i]);
+		}
+	}
+	
+	public void setup2() {
+		avltree = new AVLTree<Integer,Integer>();
+		Integer[] num = new Integer[] {50,100,0,25,-25,125,75,30};
+		for (int i = 0; i < num.length; i++) {
+			avltree.insert(num[i], num[i]);
+		}
+	}
+	
+	public void setup3() {
+		avltree = new AVLTree<Integer,Integer>();
 	}
 	
 	@Test
@@ -66,7 +82,8 @@ class AVLTest {
 		System.out.println(node.getRight());
 		System.out.println(node.getLeft());*/
 	}
-	/*
+	
+	
 	@Test
 	public void searchTest () {
 		//First test
@@ -83,6 +100,5 @@ class AVLTest {
 		Assertions.assertTrue(avltree.searchValue(-2).getValue()==-2);
 		Assertions.assertTrue(avltree.searchValue(-3).getValue()==-3);
 		Assertions.assertTrue(avltree.searchValue(-1).getValue()==-1);
-		
-	}*/
+	}
 }

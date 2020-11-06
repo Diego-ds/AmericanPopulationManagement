@@ -16,6 +16,7 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyEvent;
 import model.Manager;
 import threads.SearchThread;
 
@@ -24,7 +25,7 @@ public class SearchGUI {
 	private WelcomeGUI welcome;
 	private MainMenuGUI mainMenu;
 	private EditPersonGUI edit;
-	
+	private SearchThread thread;
 	
     @FXML
     private TextField lookFortxt;
@@ -57,12 +58,12 @@ public class SearchGUI {
 			alert.setContentText("Search a valid record first");
 			alert.showAndWait();
     	}else {
+    		String key [] = spinner.getValue().split(",");
+        	edit.setKey(key[0]);
     		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlFiles/EditPersonScreen.fxml"));
         	fxmlLoader.setController(edit);
         	Parent mainMenuPane = fxmlLoader.load();
         	welcome.getMainPane().setCenter(mainMenuPane);
-        	String key [] = spinner.getValue().split(" ");
-        	edit.setKey(key[0]);
     	}
     	
     }
@@ -72,16 +73,15 @@ public class SearchGUI {
 		this.welcome = welcome;
 		this.mainMenu = mainMenu;
 		this.edit=new EditPersonGUI(manager);
+		thread= new SearchThread(manager,this);
 	}
 	
     @FXML
     public void goBack(ActionEvent event) throws IOException {
-    	
+    	setThreadFlag(false);
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlFiles/MainMenuScreen.fxml"));
     	fxmlLoader.setController(mainMenu);
-    	
     	Parent mainMenuPane = fxmlLoader.load();
-    		
     	welcome.getMainPane().setCenter(mainMenuPane);
     }
 	
@@ -89,16 +89,14 @@ public class SearchGUI {
     	int option =1;
     	if(lastNameOption.isSelected()) {
     		option=2;
-    		return option;
     	}else if(codeOption.isSelected()) {
     		option=3;
-    		return option;
     	}else if(nameLastNameOption.isSelected()) {
     		option=4;
-    		return option;
-    	}else {
-    		return option;
+    	}else if(nameOption.isSelected()){
+    		option=1;
     	}
+    	return option;
     }
     
     public String getLookFor() {
@@ -111,10 +109,14 @@ public class SearchGUI {
     	spinner.setValueFactory(spData);
     }
     
-    @FXML
+ 
     public void initialize() {
-    	SearchThread thread = new SearchThread(manager,this);
-    	thread.setDaemon(true);
+    	thread= new SearchThread(manager,this);
     	thread.start();
     }
+    
+    public void setThreadFlag(boolean val) {
+    	thread.setFlag(val);
+    }
+    
 }
