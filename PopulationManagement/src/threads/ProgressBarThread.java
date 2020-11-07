@@ -1,6 +1,7 @@
 package threads;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import javafx.application.Platform;
 import model.Manager;
@@ -13,7 +14,7 @@ public class ProgressBarThread extends Thread{
 	private GenerateDatabaseGUI database;
 	private int recordNumber;
 	private double pr;
-	private long time;
+	private String time;
 	
 	public ProgressBarThread(Manager manager, GenerateDatabaseGUI database, int recordNumber) {
 		this.manager = manager;
@@ -60,7 +61,10 @@ public class ProgressBarThread extends Thread{
 		}
 		manager.setRecords(records);
 		time2 = System.currentTimeMillis();
-		time=time2-time1;
+		long time3 =time2-time1;
+		time = String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(time3),
+	            TimeUnit.MILLISECONDS.toMinutes(time3) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(time3)),
+	            TimeUnit.MILLISECONDS.toSeconds(time3) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time3)));
 		Platform.runLater(new Thread() {
 			@Override
 			public void run() {

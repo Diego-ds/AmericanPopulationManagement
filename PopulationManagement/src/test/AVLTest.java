@@ -36,7 +36,6 @@ class AVLTest {
 	public void insertAVLTest () {
 		setup1();
 		Node<Integer, Integer> node = avltree.getRoot(); //Root should be node with key 4
-		System.out.println(node.getValue());
 		assertTrue(node.getKey() == 4 && node.getHeight() == 3);
 		node = avltree.searchValue(9);
 		assertTrue(node.getKey() == 9 && node.getHeight() == 1);
@@ -74,7 +73,6 @@ class AVLTest {
 		avltree.insertAVL(2, 2);
 		avltree.insertAVL(7, 7);
 		avltree.insertAVL(11, 11);
-		avltree.insertAVL(5, 5);
 		avltree.insertAVL(12, 12);
 		avltree.insertAVL(6, 6);
 		avltree.insertAVL(8, 8);
@@ -154,5 +152,21 @@ class AVLTest {
 		Assertions.assertTrue(avltree.searchValue(-2).getValue()==-2);
 		Assertions.assertTrue(avltree.searchValue(-3).getValue()==-3);
 		Assertions.assertTrue(avltree.searchValue(-1).getValue()==-1);
+	}
+	
+	@Test
+	public void deleteValueTest () {
+		setup2();
+		
+		Assertions.assertTrue(avltree.deleteValue(50));
+		Assertions.assertNull(avltree.searchValue(50));
+		
+		Assertions.assertTrue(avltree.deleteValue(25));
+		Assertions.assertNull(avltree.searchValue(25));
+		
+		Assertions.assertTrue(avltree.deleteValue(-25));
+		Assertions.assertNull(avltree.searchValue(-25));
+		
+		Assertions.assertFalse(avltree.deleteValue(13));
 	}
 }

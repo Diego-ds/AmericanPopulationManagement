@@ -15,7 +15,7 @@
    <top>
       <VBox prefHeight="27.0" prefWidth="616.0" BorderPane.alignment="CENTER">
          <children>
-            <MenuBar>
+            <MenuBar fx:id="menuBar">
               <menus>
                 <Menu mnemonicParsing="false" text="Go to menu">
                   <items>

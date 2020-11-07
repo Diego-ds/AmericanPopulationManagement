@@ -64,11 +64,9 @@ public class AddPersonGUI {
     		
     		//Getting values
     		name = textFieldFirstName.getText();
-  
     		lastName = textFieldLastName.getText();
-
     		gender = ((RadioButton)toogleGroupGender.getSelectedToggle()).getText();
-    		
+
     		if (datePickerBirthDate.getValue() == null) {
     			throw new IllegalArgumentException("Birth Date");
     		}

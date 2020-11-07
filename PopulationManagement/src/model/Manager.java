@@ -380,10 +380,8 @@ public class Manager {
 		tree.setRoot(null);
 		tree.setCounter(0);
 		for(int i=0;i<generatedRecords.length;i++) {
-			System.out.println(generatedRecords[i].getCode()+" "+generatedRecords[i].getName());
 			tree.insertAVL(generatedRecords[i].getCode(), generatedRecords[i]);
 		}
-		//System.out.println(tree.getRoot().getValue().getCode());
 	}
 	
 	public void deleteValue(String key) {

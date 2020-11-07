@@ -55,6 +55,7 @@ public class MainMenuGUI {
     @FXML
     public void loadSearchPerson(ActionEvent event) throws IOException {
     	search.setThreadFlag(true);
+    	mainMenu.setVisibleBar(false);
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlFiles/SearchScreen.fxml"));
     	fxmlLoader.setController(search);
     	Parent mainMenuPane = fxmlLoader.load();	

@@ -21,29 +21,44 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>
 	public boolean deleteValue(K key) {
 		boolean val = false;
 		Node<K,V> n = searchValue(key);
+		
+		if (n != null) {
+		Node<K,V> right =n.getRight();
+		Node<K,V> left =n.getLeft();
 		Node<K,V> father=null;
 		if(n.getFather()!=null) {
 			father=n.getFather();
 		}
+		
 		val= super.deleteValue(key);
-		if(n!=null) {
-			if(n.getRight() != null || n.getLeft() != null) {
+		if(father!=null) {
+			if(father.getRight() != null || father.getLeft() != null) {
 				if(n.getRight()!=null) {
-					balance(n.getRight());
+					balance(father.getRight());
 				}else {
-					balance(n.getLeft());
+					balance(father.getLeft());
 				}
 			}else {
-				balance(n);
+				balance(father);
 			}
 		}else {
-			
+			if(right !=null || left != null) {
+				if(right!=null && left!=null) {
+					balance(right);
+					balance(left);
+				}else if(right!=null) {
+					balance(right);
+				}else {
+					balance(left);
+				}
+			}
 		}
 		counter--;
+		}
 		return val;
 	}
-	
-	
+
+
 	public void insertAVL(K key,V value) {
 		Node<K,V> n =super.insert(key,value);
 		balance(n);
@@ -72,7 +87,6 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>
 	
 	public void balance (Node<K,V> node) {
 		while(node!=null) {
-			//System.out.println(node.getHeight()+" key "+node.getKey()); //print
 			int balanceFactor = balanceFactor(node);
 			if(balanceFactor>1) {
 				rightCases(node);
@@ -92,8 +106,11 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>
 		}else{
 			rightRotate(node.getRight());
 			leftRotate(node);
-			updateHeight(node);
-			updateHeight(node.getFather());
+			if(node.getFather()!=null) {
+				updateHeight(node.getFather());
+			}else {
+				updateHeight(node);
+			}
 		}
 	}
 	
@@ -117,10 +134,11 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>
 	//atributo para la altura bien melo B)
 	public void rightRotate(Node <K,V> node) {	
 		Node<K,V> parent =node.getFather();
-		Node <K,V> left = node.getLeft();
+		Node <K,V> left= node.getLeft();
 		if(left.getRight()!=null) {
 			Node <K,V> leftRightTree = left.getRight();
 			leftRightTree.setFather(node);
+			node.setLeft(leftRightTree);
 		}else {
 			node.setLeft(null);
 		}
@@ -134,14 +152,17 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>
 		}else {
 			setRoot(left);
 		}
+
+		
 	}
 	
 	public void leftRotate(Node <K,V> node) {
 		Node<K,V> parent =node.getFather();
 		Node <K,V> right = node.getRight();
-		if(right.getLeft()!=null) {
+		if(right.getLeft() != null) {
 			Node <K,V> rightLeft = right.getLeft();
 			rightLeft.setFather(node);
+			node.setRight(rightLeft);
 		}else {
 			node.setRight(null);
 		}
@@ -155,6 +176,7 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>
 		}else {
 			setRoot(right);
 		}
+
 	}
 	
 	public Node<K,V> getRoot(){

@@ -16,7 +16,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.KeyEvent;
 import model.Manager;
 import threads.SearchThread;
 
@@ -58,6 +57,7 @@ public class SearchGUI {
 			alert.setContentText("Search a valid record first");
 			alert.showAndWait();
     	}else {
+    		welcome.setVisibleBar(true);
     		String key [] = spinner.getValue().split(",");
         	edit.setKey(key[0]);
     		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlFiles/EditPersonScreen.fxml"));
@@ -79,6 +79,7 @@ public class SearchGUI {
     @FXML
     public void goBack(ActionEvent event) throws IOException {
     	setThreadFlag(false);
+    	welcome.setVisibleBar(true);
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlFiles/MainMenuScreen.fxml"));
     	fxmlLoader.setController(mainMenu);
     	Parent mainMenuPane = fxmlLoader.load();
