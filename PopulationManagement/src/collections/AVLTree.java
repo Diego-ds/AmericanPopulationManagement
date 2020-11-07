@@ -13,10 +13,6 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>
 		counter = 0;
 	}
 	
-	/* ARREGLAR EL DESGRACIADO ARBOL
-	 * AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-	 */
-	
 	@Override
 	public boolean deleteValue(K key) {
 		boolean val = false;
