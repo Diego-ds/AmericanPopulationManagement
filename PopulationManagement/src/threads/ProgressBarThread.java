@@ -26,8 +26,9 @@ public class ProgressBarThread extends Thread{
 
 	@Override
 	public void run() {
+		database.setVisible(false);
 		long time1 = System.currentTimeMillis();
-		long time2=System.currentTimeMillis();
+		long time2 = System.currentTimeMillis();
 		
 		Record[] records = new Record[recordNumber];
 		
@@ -45,14 +46,16 @@ public class ProgressBarThread extends Thread{
 				double index = (double)i;
 				double recordN = (double)recordNumber;
 				pr = index/recordN;
+				System.out.println(pr);
 				records[i] = manager.generateRecord();
+				System.out.println(i);
 				Platform.runLater(new Thread() {
 					@Override
 					public void run() {
 						database.setProgressBar(pr);
 					}
 				});
-				Thread.sleep(10);
+				Thread.sleep(1);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -73,6 +76,4 @@ public class ProgressBarThread extends Thread{
 		});
 		
 	}	
-	
-	
 }

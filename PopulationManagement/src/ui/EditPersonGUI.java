@@ -1,10 +1,13 @@
  package ui;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 import collections.Node;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.DatePicker;
@@ -16,11 +19,15 @@ import model.Record;
 
 public class EditPersonGUI {
 	private Manager manager;
+	private WelcomeGUI welcomeGUI;
+	private SearchGUI searchGUI;
 	private String key;
 
-    public EditPersonGUI(Manager manager) {
+    public EditPersonGUI(Manager manager, WelcomeGUI welcomeGUI, SearchGUI searchGUI) {
 		super();
 		this.manager = manager;
+		this.welcomeGUI = welcomeGUI;
+		this.searchGUI = searchGUI;
 	}
 
 	@FXML
@@ -48,7 +55,7 @@ public class EditPersonGUI {
     private RadioButton femaleRButton;
     
     @FXML
-    public void deleteRecord(ActionEvent event) {
+    public void deleteRecord(ActionEvent event) throws IOException {
     	manager.deleteValue(key);
     	nameCamp.setText("");
     	lastNameCamp.setText("");
@@ -60,6 +67,13 @@ public class EditPersonGUI {
 		alert.setTitle("Successful operation");
 		alert.setContentText("Person deleted successfully!");
 		alert.showAndWait();
+		
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fxmlFiles/SearchScreen.fxml"));
+    	fxmlLoader.setController(searchGUI);
+    	
+    	Parent mainMenuPane = fxmlLoader.load();
+    		
+    	welcomeGUI.getMainPane().setCenter(mainMenuPane);
     }
 
     @FXML

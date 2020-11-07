@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import model.Manager;
 import threads.ProgressBarThread;
 
@@ -50,6 +51,13 @@ public class GenerateDatabaseGUI {
     @FXML
     public void saveDatabase(ActionEvent event) throws IOException {
     	manager.saveData();
+		
+    	Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Congrats!");
+		alert.setHeaderText("Successful operation");
+		alert.setContentText("Database saved successfully!");
+		
+		alert.showAndWait();
     }
     
     

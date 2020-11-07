@@ -190,16 +190,20 @@ public class Manager {
 
 		//Nationality
 		
-		//Gets the max percentage (
+		//Gets the max percentage 
 		String maxPerString = population.get(0).split(",")[10]; 
-		double maxPer = Double.parseDouble(maxPerString.substring(0, maxPerString.length() - 1));
-
+		double maxPer = Double.parseDouble(maxPerString.substring(0, maxPerString.length() - 2));
 		double chosenPer = maxPer * r.nextDouble();
-		
 		String nationPer = Double.toString(chosenPer);
+		
 		if (nationPer.length() > 4) {
-			nationPer = Double.toString(chosenPer).substring(0,4) + "%";
+			nationPer = Double.toString(chosenPer).substring(0,4) + " %";
 		}
+		
+		if (nationPer.compareTo("4.25 %") > 0) {
+			nationPer = "4.24 %";
+		}
+		
 		String perCondition = "";
 		
 		exit = false;
@@ -209,7 +213,6 @@ public class Manager {
 				exit = true;
 			}
 		}
-
 		
 		ArrayList<String> candidateCountries = new ArrayList<>();
 		for (int i = 0; i < population.size(); i++) {
@@ -247,7 +250,6 @@ public class Manager {
 		}
 		return null;
 	}
-	
 	public void addRecord(String name, String lastName, String gender, String birthDate,
 			double height, String nationality) {
 		
@@ -262,20 +264,21 @@ public class Manager {
 		}
 		String toCompare="";
 		if(name.length()>=current.getValue().getName().length()) {
-			toCompare=name;
+			if (name.equalsIgnoreCase(current.getValue().getName())) {
+				names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
+			}
+			
 		}else {
 			toCompare = current.getValue().getName().substring(0,name.length());
+			if(toCompare.contains(name)) {
+				names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
+			}
 		}
-		if(toCompare.contains(name)) {
-			names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
-		}
-		
 		
 		searchByName(names,current.getLeft(),name);
 		
 		searchByName(names,current.getRight(),name);
 		return names;
-		
 	}
 	
 	public ArrayList<String> searchByLastName(String lastname) {
@@ -287,18 +290,22 @@ public class Manager {
 		return null;
 	}
 	
-	private ArrayList<String> searchByLastName(ArrayList<String> names,Node<String,Record> current,String lastname) {
+	private ArrayList<String> searchByLastName(ArrayList<String> names,
+			Node<String,Record> current,String lastname) {
 		if(current==null) {
 			return names;
 		}
 		String toCompare="";
 		if(lastname.length()>=current.getValue().getLastname().length()) {
-			toCompare=lastname;
+			if (lastname.equalsIgnoreCase(current.getValue().getLastname())) {
+				names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
+			}
+			
 		}else {
 			toCompare = current.getValue().getLastname().substring(0,lastname.length());
-		}
-		if(toCompare.contains(lastname)) {
-			names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
+			if(toCompare.contains(lastname)) {
+				names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
+			}
 		}
 
 		
@@ -318,7 +325,9 @@ public class Manager {
 		return null;
 	}
 	
-	private ArrayList<String> searchByCode(ArrayList<String> names,Node<String,Record> current,String code) {
+	private ArrayList<String> searchByCode(ArrayList<String> names, Node<String,Record> current,
+			String code) {
+		
 		if(current==null) {
 			return names;
 		}
@@ -350,19 +359,23 @@ public class Manager {
 		return null;
 	}
 	
-	private ArrayList<String> searchByNameAndLastname(ArrayList<String> names,Node<String,Record> current,String name) {
+	private ArrayList<String> searchByNameAndLastname(ArrayList<String> names,
+			Node<String,Record> current,String name) {
 		if(current==null) {
 			return names;
 		}
 		String nameComplete = current.getValue().getName()+" "+current.getValue().getLastname();
 		String toCompare ="";
-		if(name.length()>=nameComplete.length()) {
-			toCompare=name;
+		if(name.length() >= nameComplete.length()) {
+			if (name.equalsIgnoreCase(nameComplete)) {
+				names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
+			}
+			
 		}else {
-			toCompare = nameComplete.substring(0,name.length());
-		}
-		if(toCompare.contains(name)) {
-			names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
+			toCompare = nameComplete.substring(0, name.length());
+			if(toCompare.contains(name)) {
+				names.add(current.getValue().getCode()+","+current.getValue().getName()+" "+current.getValue().getLastname());
+			}
 		}
 
 		searchByNameAndLastname(names,current.getLeft(),name);
@@ -379,7 +392,7 @@ public class Manager {
 	public void saveData() {
 		tree.setRoot(null);
 		tree.setCounter(0);
-		for(int i=0;i<generatedRecords.length;i++) {
+		for(int i=0;i<generatedRecords.length;i++) {	
 			tree.insertAVL(generatedRecords[i].getCode(), generatedRecords[i]);
 		}
 	}

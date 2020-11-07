@@ -54,21 +54,18 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>
 		return val;
 	}
 
-
 	public void insertAVL(K key,V value) {
 		Node<K,V> n =super.insert(key,value);
 		balance(n);
 		counter++;
 	}
 	
-
 	public int height(Node<K,V> node) {
 		if(node==null) {
 			return -1;
 		}else { 
 			return node.getHeight();
 		}
-
 	}
 	
 	public int balanceFactor (Node<K,V> node) {
@@ -102,11 +99,7 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>
 		}else{
 			rightRotate(node.getRight());
 			leftRotate(node);
-			if(node.getFather()!=null) {
-				updateHeight(node.getFather());
-			}else {
-				updateHeight(node);
-			}
+			updateHeight(node);
 		}
 	}
 	
@@ -118,12 +111,7 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>
 		}else{
 			leftRotate(node.getLeft());
 			rightRotate(node);
-			if(node.getFather()!=null) {
-				updateHeight(node.getFather());
-			}else {
-				updateHeight(node);
-			}
-			
+			updateHeight(node);
 		}
 	}
 
@@ -148,8 +136,8 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>
 		}else {
 			setRoot(left);
 		}
-
-		
+		updateHeight(left);
+		updateHeight(node);
 	}
 	
 	public void leftRotate(Node <K,V> node) {
@@ -172,7 +160,8 @@ public class AVLTree<K extends Comparable<K>,V> extends BinarySearchTree<K,V>
 		}else {
 			setRoot(right);
 		}
-
+		updateHeight(right);
+		updateHeight(node);
 	}
 	
 	public Node<K,V> getRoot(){

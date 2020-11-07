@@ -2,11 +2,15 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.IOException;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import collections.AVLTree;
 import collections.Node;
+import model.Manager;
+import model.Record;
 
 class AVLTest {
 	
@@ -168,5 +172,32 @@ class AVLTest {
 		Assertions.assertNull(avltree.searchValue(-25));
 		
 		Assertions.assertFalse(avltree.deleteValue(13));
+	}
+	
+	@Test
+	public void generatorTest() throws IOException {
+		setup3();
+		Manager manager = new Manager();
+		Record[] record = new Record[100000];
+		manager.loadData();
+		for (int i = 0; i < 100000; i++) {
+			System.out.println(i);
+			record[i] = manager.generateRecord();
+		}
+		manager.setRecords(record);
+		manager.saveData();
+	}
+	
+	@Test
+	public void generatorTest2() throws IOException {
+		AVLTree<String, String> tree = new AVLTree<>();
+		tree.insertAVL("A8119072638749931979", "A8");
+		tree.insertAVL("K7875554718347284512", "K7");
+		tree.insertAVL("I9061786276594817152", "I9"); 
+		tree.insertAVL("F6437870050708688863" , "F6");
+		tree.insertAVL("A1755217046139629481" , "A1");
+		tree.insertAVL("P7270701816894334697" , "P7");
+		tree.insertAVL("M4851340702606442530" , "M4");
+		tree.insertAVL("Y7335136876768043289" , "Y7");
 	}
 }

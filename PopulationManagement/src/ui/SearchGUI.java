@@ -72,7 +72,7 @@ public class SearchGUI {
 		this.manager = manager;
 		this.welcome = welcome;
 		this.mainMenu = mainMenu;
-		this.edit=new EditPersonGUI(manager);
+		this.edit=new EditPersonGUI(manager, welcome, this);
 		thread= new SearchThread(manager,this);
 	}
 	
