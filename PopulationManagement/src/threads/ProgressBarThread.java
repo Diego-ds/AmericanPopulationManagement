@@ -46,18 +46,13 @@ public class ProgressBarThread extends Thread{
 				double index = (double)i;
 				double recordN = (double)recordNumber;
 				pr = index/recordN;
-				System.out.println(pr);
 				records[i] = manager.generateRecord();
-				System.out.println(i);
 				Platform.runLater(new Thread() {
 					@Override
 					public void run() {
 						database.setProgressBar(pr);
 					}
 				});
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

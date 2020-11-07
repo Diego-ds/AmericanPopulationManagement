@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.IOException;
+import java.util.IllegalFormatException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,17 +35,24 @@ public class GenerateDatabaseGUI {
 
     @FXML
     public void generateDatabase(ActionEvent event) {
-    	if(textFieldRegistersNo.getText().equals("")) {
-    		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-			alert.setHeaderText("Error");
-			alert.setTitle("Alert");
-			alert.setContentText("Enter the number of records that you want to generate");
+    	try {
+
+    		if(textFieldRegistersNo.getText().equals("")) {
+    			throw new IllegalArgumentException();
+    			
+    		}else {
+    			int number = Integer.parseInt(textFieldRegistersNo.getText());
+    			thread = new ProgressBarThread(manager, this, number);
+    			thread.setDaemon(true);
+    			thread.start();
+    		}
+    	} catch (IllegalArgumentException nfe) {
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setHeaderText("Something went wrong...");
+			alert.setTitle("Input Error");
+			alert.setContentText("Numbers only");
+			
 			alert.showAndWait();
-    	}else {
-    		int number = Integer.parseInt(textFieldRegistersNo.getText());
-    		thread = new ProgressBarThread(manager, this, number);
-    		thread.setDaemon(true);
-    		thread.start();
     	}
     }
 

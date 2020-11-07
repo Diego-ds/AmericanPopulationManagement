@@ -21,7 +21,7 @@ public class Main extends Application {
 		manager=new Manager();
 		try {
 			manager.chargeTree();
-		} catch (ClassNotFoundException  | IOException e) {
+		} catch (ClassNotFoundException | IOException e) {
 			manager=new Manager();
 		} 
 		manager.loadData();
